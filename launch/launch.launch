@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+  <node name="mav_moveto_action" pkg="test_action" type="moveto_server">
+    <remap from="odometry" to="firefly/odometry_sensor1/odometry" />
+    <remap from="goalPose" to="firefly/command/pose" />
+  </node>
+
+
+</launch>
