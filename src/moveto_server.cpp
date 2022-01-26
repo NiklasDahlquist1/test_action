@@ -7,7 +7,7 @@
 #include <test_action/MoveToAction.h>
 
 
-
+#include "nav_msgs/Odometry.h"
 
 
 class MoveTo
@@ -25,7 +25,7 @@ public:
 
 
     //subscribe to the data topic of interest
-    sub_ = nh_.subscribe("pose", 1, &MoveTo::subscribeCB, this);
+    sub_ = nh_.subscribe("odometry", 1, &MoveTo::subscribeCB, this);
 
     pub_pose_ = nh_.advertise<geometry_msgs::PoseStamped>("goalPose", 1000);
 
@@ -57,7 +57,7 @@ public:
     as_.setPreempted();
   }
 
-  void subscribeCB(const geometry_msgs::Pose& msg)//const std_msgs::Float32::ConstPtr& msg)
+  void subscribeCB(const nav_msgs::Odometry& msg)//const std_msgs::Float32::ConstPtr& msg)
   {
 
     // make sure that the action hasn't been canceled
@@ -67,7 +67,7 @@ public:
 
 
     //ROS_INFO("Received ros data [%f, %f, %f]", msg->position.x, msg->position.y, msg->position.z);
-    current_ = msg;
+    current_ = msg.pose.pose;
 
     //publish feedback
     feedback_.pose_current = current_;
